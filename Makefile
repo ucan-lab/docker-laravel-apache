@@ -3,28 +3,28 @@ up:
 build:
 	docker-compose build --no-cache --force-rm
 laravel-install:
-	docker-compose exec app composer create-project --prefer-dist laravel/laravel .
+	docker-compose exec web composer create-project --prefer-dist laravel/laravel .
 create-project:
 	@make build
 	@make up
 	@make laravel-install
-	docker-compose exec app php artisan key:generate
-	docker-compose exec app php artisan storage:link
+	docker-compose exec web php artisan key:generate
+	docker-compose exec web php artisan storage:link
 	@make fresh
 install-recommend-packages:
-	docker-compose exec app composer require doctrine/dbal
-	docker-compose exec app composer require --dev barryvdh/laravel-ide-helper
-	docker-compose exec app composer require --dev beyondcode/laravel-dump-server
-	docker-compose exec app composer require --dev barryvdh/laravel-debugbar
-	docker-compose exec app composer require --dev roave/security-advisories:dev-master
-	docker-compose exec app php artisan vendor:publish --provider="BeyondCode\DumpServer\DumpServerServiceProvider"
-	docker-compose exec app php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"
+	docker-compose exec web composer require doctrine/dbal
+	docker-compose exec web composer require --dev barryvdh/laravel-ide-helper
+	docker-compose exec web composer require --dev beyondcode/laravel-dump-server
+	docker-compose exec web composer require --dev barryvdh/laravel-debugbar
+	docker-compose exec web composer require --dev roave/security-advisories:dev-master
+	docker-compose exec web php artisan vendor:publish --provider="BeyondCode\DumpServer\DumpServerServiceProvider"
+	docker-compose exec web php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"
 init:
 	docker-compose up -d --build
-	docker-compose exec app composer install
-	docker-compose exec app cp .env.example .env
-	docker-compose exec app php artisan key:generate
-	docker-compose exec app php artisan storage:link
+	docker-compose exec web composer install
+	docker-compose exec web cp .env.example .env
+	docker-compose exec web php artisan key:generate
+	docker-compose exec web php artisan storage:link
 	@make fresh
 remake:
 	@make destroy
@@ -59,35 +59,33 @@ log-db:
 log-db-watch:
 	docker-compose logs --follow db
 web:
-	docker-compose exec web ash
-app:
-	docker-compose exec app bash
+	docker-compose exec web bash
 migrate:
-	docker-compose exec app php artisan migrate
+	docker-compose exec web php artisan migrate
 fresh:
-	docker-compose exec app php artisan migrate:fresh --seed
+	docker-compose exec web php artisan migrate:fresh --seed
 seed:
-	docker-compose exec app php artisan db:seed
+	docker-compose exec web php artisan db:seed
 rollback-test:
-	docker-compose exec app php artisan migrate:fresh
-	docker-compose exec app php artisan migrate:refresh
+	docker-compose exec web php artisan migrate:fresh
+	docker-compose exec web php artisan migrate:refresh
 tinker:
-	docker-compose exec app php artisan tinker
+	docker-compose exec web php artisan tinker
 test:
-	docker-compose exec app php artisan test
+	docker-compose exec web php artisan test
 optimize:
-	docker-compose exec app php artisan optimize
+	docker-compose exec web php artisan optimize
 optimize-clear:
-	docker-compose exec app php artisan optimize:clear
+	docker-compose exec web php artisan optimize:clear
 cache:
-	docker-compose exec app composer dump-autoload -o
+	docker-compose exec web composer dump-autoload -o
 	@make optimize
-	docker-compose exec app php artisan event:cache
-	docker-compose exec app php artisan view:cache
+	docker-compose exec web php artisan event:cache
+	docker-compose exec web php artisan view:cache
 cache-clear:
-	docker-compose exec app composer clear-cache
+	docker-compose exec web composer clear-cache
 	@make optimize-clear
-	docker-compose exec app php artisan event:clear
+	docker-compose exec web php artisan event:clear
 npm:
 	@make npm-install
 npm-install:
@@ -119,7 +117,7 @@ sql:
 redis:
 	docker-compose exec redis redis-cli
 ide-helper:
-	docker-compose exec app php artisan clear-compiled
-	docker-compose exec app php artisan ide-helper:generate
-	docker-compose exec app php artisan ide-helper:meta
-	docker-compose exec app php artisan ide-helper:models --nowrite
+	docker-compose exec web php artisan clear-compiled
+	docker-compose exec web php artisan ide-helper:generate
+	docker-compose exec web php artisan ide-helper:meta
+	docker-compose exec web php artisan ide-helper:models --nowrite

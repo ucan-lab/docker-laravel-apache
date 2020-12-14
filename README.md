@@ -1,50 +1,41 @@
-# docker-laravel 🐳
+# docker-laravel-apache 🐳
 
-![License](https://img.shields.io/github/license/ucan-lab/docker-laravel?color=f05340)
-![Stars](https://img.shields.io/github/stars/ucan-lab/docker-laravel?color=f05340)
-![Issues](https://img.shields.io/github/issues/ucan-lab/docker-laravel?color=f05340)
-![Forks](https://img.shields.io/github/forks/ucan-lab/docker-laravel?color=f05340)
+![License](https://img.shields.io/github/license/ucan-lab/docker-laravel-apache?color=f05340)
+![Stars](https://img.shields.io/github/stars/ucan-lab/docker-laravel-apache?color=f05340)
+![Issues](https://img.shields.io/github/issues/ucan-lab/docker-laravel-apache?color=f05340)
+![Forks](https://img.shields.io/github/forks/ucan-lab/docker-laravel-apache?color=f05340)
 
 ## Introduction
 
 Build a simple laravel development environment with docker-compose.
+Apache version of [docker-laravel](https://github.com/ucan-lab/docker-laravel)。
 
 ## Usage
 
 ```bash
-$ git clone git@github.com:ucan-lab/docker-laravel.git
-$ cd docker-laravel
+$ git clone git@github.com:ucan-lab/docker-laravel-apache.git
+$ cd docker-laravel-apache
 $ make create-project # Install the latest Laravel project
 $ make install-recommend-packages # Not required
 ```
 
 http://localhost
 
-Read this [Makefile](https://github.com/ucan-lab/docker-laravel/blob/master/Makefile).
-
-## Tips
-
-Read this [Wiki](https://github.com/ucan-lab/docker-laravel/wiki).
+Read this [Makefile](https://github.com/ucan-lab/docker-laravel-apache/blob/master/Makefile).
 
 ## Container structure
 
 ```bash
-├── app
 ├── web
 └── db
 ```
 
-### app container
-
-- Base image
-  - [php](https://hub.docker.com/_/php):7.4-fpm-buster
-  - [composer](https://hub.docker.com/_/composer):2.0
-
 ### web container
 
 - Base image
-  - [nginx](https://hub.docker.com/_/nginx):1.18-alpine
-  - [node](https://hub.docker.com/_/node):14.2-alpine
+  - [php](https://hub.docker.com/_/php):7.4-apache-buster
+  - [composer](https://hub.docker.com/_/composer):2.0
+  - [node](https://hub.docker.com/_/node):node:14-buster
 
 ### db container
 
