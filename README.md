@@ -8,7 +8,7 @@
 ## Introduction
 
 Build a simple laravel development environment with docker-compose.
-Apache version of [docker-laravel](https://github.com/ucan-lab/docker-laravel)。
+Apache version of [docker-laravel](https://github.com/ucan-lab/docker-laravel).
 
 ## Usage
 
