@@ -10,13 +10,18 @@ create-project:
 	@make laravel-install
 	docker-compose exec web php artisan key:generate
 	docker-compose exec web php artisan storage:link
+	docker-compose exec web chown -R root:www-data .
+	docker-compose exec web find . -type f -exec chmod 664 {} \;
+	docker-compose exec web find . -type d -exec chmod 775 {} \;
+	docker-compose exec web chgrp -R www-data storage bootstrap/cache
+	docker-compose exec web chmod -R ug+rwx storage bootstrap/cache
 	@make fresh
 install-recommend-packages:
 	docker-compose exec web composer require doctrine/dbal
 	docker-compose exec web composer require --dev barryvdh/laravel-ide-helper
 	docker-compose exec web composer require --dev beyondcode/laravel-dump-server
 	docker-compose exec web composer require --dev barryvdh/laravel-debugbar
-	docker-compose exec web composer require --dev roave/security-advisories:dev-master
+	docker-compose exec web composer require --dev roave/security-advisories:dev-latest
 	docker-compose exec web php artisan vendor:publish --provider="BeyondCode\DumpServer\DumpServerServiceProvider"
 	docker-compose exec web php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"
 init:
